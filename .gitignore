@@ -1,0 +1,18 @@
+# Compiled files
+*.class
+*.log
+
+# Build directories (Maven, Gradle, SBT)
+target/
+build/
+.gradle/
+project/target/
+project/project/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Mac OS
+.DS_Store

@@ -8,6 +8,7 @@ lazy val root = (project in file("."))
     name := "scala-code",
     libraryDependencies ++= Seq(
       "org.junit.jupiter" % "junit-jupiter-api"    % "5.11.0" % Test,
+      "org.junit.jupiter" % "junit-jupiter-params"    % "5.11.0" % Test,
       "org.junit.jupiter" % "junit-jupiter-engine" % "5.11.0" % Test,
       "net.aichler"       % "jupiter-interface"    % "0.11.1" % Test
     )

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 class AppTest:
     @Test
     def testShouldPass(): Unit =
-      assertTrue(true)
+      assertTrue:
+        true
 
 

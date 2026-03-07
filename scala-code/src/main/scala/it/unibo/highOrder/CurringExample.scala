@@ -43,6 +43,7 @@ def sqrt(x: Double): Double = fixedPoint(averageDump(y => x / y))(1.0)
 @main def main(): Unit =
   // Functions as parameters
   println(product(x => x)(1, 2))
+  // Very declarative => n * (n-1) * ... * 1
   def factorial(n: Int): Int = product(identity)(1, n)
   println(factorial(0))
   println(factorial(1))

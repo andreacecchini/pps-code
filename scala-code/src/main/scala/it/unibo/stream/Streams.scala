@@ -19,7 +19,7 @@ object Streams:
       Cons(() => head, () => tail)
 
     /** build an infinite stream. */
-    def iterate[A](initial: A)(next: A => A): Stream[A] =
+    def iterate[A](initial: => A)(next: A => A): Stream[A] =
       cons(initial, iterate(next(initial))(next))
 
     extension [A](s: Stream[A])
@@ -32,6 +32,12 @@ object Streams:
       def take(n: Int): Stream[A] = s match
         case Cons(h, t) if n > 0 => cons(h(), t().take(n - 1))
         case _ => empty()
+
+      /** take elements until [[pred]] is false. */
+      def takeWhile(pred: A => Boolean): Stream[A] = s match
+        case Cons(h, t) if pred(h()) => cons(h(), t().takeWhile(pred))
+        case _ => empty()
+
 
 
 @main def testStream(): Unit =
@@ -50,3 +56,5 @@ object Streams:
   // Take
   val toTen = natural.take(10) // {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
   println(toTen.toList)
+  val toFive = natural.takeWhile(_ < 5)
+  println(toFive.toList)

@@ -1,7 +1,5 @@
 package it.unibo.stream
 
-import it.unibo.stream.Streams.Stream.*
-
 /** Streams module */
 object Streams:
   /** Stream type */

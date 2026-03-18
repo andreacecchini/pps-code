@@ -18,8 +18,8 @@ class StreamTest:
 
   @Test def testFibonacci(): Unit =
     // f_{n} = f_{n-1} + f{n-2}
-    // {(0, 1), (1, 1), (1, 2), (2, 3), (3, 5)...}
-    // {0, 1, 1, 2, 3...}
+    // {(0, 1), (1, 1), (1, 2), (2, 3), (3, 5),...}
+    // {0, 1, 1, 2, 3, ...}
     val fibonacci: Stream[Int] = iterate((0, 1))((a, b) => (b, a + b)).map(_._1)
     assertEquals(List(0, 1, 1, 2, 3), fibonacci.take(5).toList)
 

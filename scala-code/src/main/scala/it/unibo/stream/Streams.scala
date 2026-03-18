@@ -43,6 +43,11 @@ object Streams:
         case Cons(h, t) if pred(h()) => cons(h(), t().takeWhile(pred))
         case _ => empty()
 
+      /** map each element in the stream by [[mapper]]. */
+      def map[B](mapper: A => B): Stream[B] = s match
+        case Cons(h, t) => cons(mapper(h()), t().map(mapper))
+        case _ => empty()
+
 
 @main def testStream(): Unit =
   import Streams.*
@@ -54,7 +59,7 @@ object Streams:
   val natural = iterate(0)(_ + 1) // {1, 2, ...}
   // ------
   // To list
-    println(s1.toList)
+  println(s1.toList)
   // println(natural.toList) // StackOverflow!
   // ------
   // Take

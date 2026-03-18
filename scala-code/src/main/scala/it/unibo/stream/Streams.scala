@@ -22,6 +22,11 @@ object Streams:
     def iterate[A](initial: => A)(next: A => A): Stream[A] =
       cons(initial, iterate(next(initial))(next))
 
+    def fill[A](n: Int)(k: => A): Stream[A] = n match
+      case n if n > 0 => cons(k, fill(n-1)(k))
+      case _ => empty()
+
+
     extension [A](s: Stream[A])
       /** stream to list. */
       def toList: List[A] = s match

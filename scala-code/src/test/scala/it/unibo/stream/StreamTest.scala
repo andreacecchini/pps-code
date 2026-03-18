@@ -13,3 +13,6 @@ class StreamTest:
   @Test def testTakeWhile(): Unit =
     assertEquals(List(0, 1, 2, 3, 4), natural.takeWhile(_ < 5).toList)
 
+  @Test def testFill(): Unit =
+    assertEquals(List(1, 1, 1, 1), fill(4)(1).toList)
+

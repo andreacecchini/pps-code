@@ -39,7 +39,6 @@ object Streams:
         case _ => empty()
 
 
-
 @main def testStream(): Unit =
   import Streams.*
   import Stream.*
@@ -50,7 +49,7 @@ object Streams:
   val natural = iterate(0)(_ + 1) // {1, 2, ...}
   // ------
   // To list
-  println(s1.toList)
+    println(s1.toList)
   // println(natural.toList) // StackOverflow!
   // ------
   // Take

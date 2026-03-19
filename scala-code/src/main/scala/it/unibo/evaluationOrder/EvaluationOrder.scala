@@ -1,7 +1,8 @@
 package it.unibo.evaluationOrder
 
 val f1: (Boolean, Int) => Int = (cond, x) => if cond then x + 1 else 0
-// What would be the type of`f2`?
+
+// What would be the type of `f2`?
 // All declarations are fine!
 // val f2: (Boolean, Int) => Int = f3
 // val f2: (Boolean, => Int) => Int = f3
@@ -29,9 +30,10 @@ def f3(cond: Boolean, x: => Int): Int = if cond then x + 1 else 0
   c2 = 0
   f1(false, x1) // f1 computed `0` 1 times
   /*
-     IntellJ is telling me f2 is `(Boolean, Int) => Int`, but it is behaving like `(Boolean, => Int) => Int`.
-     I my opinion, something is wrong!
+     While IntelliJ reports `f2` as `(Boolean, Int) => Int`, it actually exhibits call-by-name semantics,
+     behaving as if its type were (Boolean, => Int) => Int.
+     In my view, there is an inconsistency.
      If I had made the type explicit as `(Boolean, Int) => Int` in the declaration, `x2` would be evaluated before
-     the function substitution.
+     the function substitution as expected.
   */
   f2(false, x2)

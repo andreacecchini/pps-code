@@ -22,13 +22,16 @@ object Streams:
     def iterate[A](initial: => A)(next: A => A): Stream[A] =
       cons(initial, iterate(next(initial))(next))
 
+    /** build a stream of [[n]] elements filled by [[k]]. */
     def fill[A](n: Int)(k: => A): Stream[A] =
       cycle(List(k)).take(n)
 
+    /** build a streaming alternating [[s1]] and [[s2]]. */
     def interleave[A](s1: Stream[A], s2: Stream[A]): Stream[A] = s1 match
       case Cons(h1, t1) => cons(h1(), interleave(s2, t1()))
       case _ => s2
 
+    /** build an infinite stream cycling [[l]]. */
     def cycle[A](l: List[A]): Stream[A] = l match
       case Nil => empty()
       case _ =>

@@ -1,7 +1,5 @@
 package it.unibo.stream
 
-import scala.annotation.tailrec
-
 /** Streams module */
 object Streams:
   /** Stream type */

@@ -9,7 +9,7 @@ object Streams:
 
   /** Stream algorithms */
   object Stream:
-    /** empty string */
+    /** empty node */
     def empty[A](): Stream[A] = Empty()
 
     /** lazy node stream. */

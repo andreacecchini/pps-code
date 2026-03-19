@@ -3,6 +3,7 @@ package it.unibo.stream
 @main def testFilter(): Unit =
   import Streams.*
   import Stream.*
+
   def x1 = {
     println("computing x1...")
     1

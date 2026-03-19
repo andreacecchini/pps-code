@@ -29,7 +29,7 @@ object Streams:
 
     def interleave[A](s1: Stream[A], s2: Stream[A]): Stream[A] = s1 match
       case Cons(h1, t1) => cons(h1(), interleave(s2, t1()))
-      case Empty() => s2
+      case _ => s2
 
     def cycle[A](l: List[A]): Stream[A] = l match
       case Nil => empty()

@@ -60,6 +60,7 @@ object Streams:
         case Cons(h, t) => cons(mapper(h()), t().map(mapper))
         case _ => empty()
 
+      /** filter elements by [[pred]]. */
       def filter(pred: A => Boolean): Stream[A] = s match
         case Cons(h, t) if pred(h()) => cons(h(), t().filter(pred))
         case Cons(h, t) => t().filter(pred)

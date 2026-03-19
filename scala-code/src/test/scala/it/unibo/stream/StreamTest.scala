@@ -27,3 +27,7 @@ class StreamTest:
     val negative = iterate(0)(_ - 1)
     assertEquals(List(0, 0, 1, -1, 2, -2, 3, -3, 4, -4), interleave(natural, negative).take(10).toList)
 
+  @Test def testCycle(): Unit =
+    assertEquals(empty(), cycle(List.empty))
+    assertEquals(List('a', 'a'), cycle(List('a')).take(2).toList)
+    assertEquals(List('a', 'b', 'c', 'a', 'b'), cycle(List('a', 'b', 'c')).take(5).toList)

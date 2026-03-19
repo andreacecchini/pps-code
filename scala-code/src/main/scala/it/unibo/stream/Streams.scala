@@ -33,7 +33,7 @@ object Streams:
 
     def cycle[A](l: List[A]): Stream[A] = l match
       case Nil => empty()
-      case h :: tail =>
+      case _ =>
         val start = (l.head, l.tail)
         iterate(start)((_, t) => if t == List.empty then start else (t.head, t.tail)).map(_._1)
 

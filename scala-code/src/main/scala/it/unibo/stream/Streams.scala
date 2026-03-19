@@ -70,3 +70,7 @@ object Streams:
   println(toTen.toList)
   val toFive = natural.takeWhile(_ < 5)
   println(toFive.toList)
+  // Fibonacci
+  val fibonacci = iterate((0, 1))((a, b) => (b, a + b)).map(_._1)
+  println(fibonacci.take(2).toList)
+  println(fibonacci.take(5).toList)

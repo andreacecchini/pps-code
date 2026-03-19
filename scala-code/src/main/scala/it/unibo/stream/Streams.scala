@@ -51,7 +51,7 @@ object Streams:
         case _ => empty()
 
       /** take elements until [[pred]] is false. */
-      def takeWhile(pred: A => Boolean): Stream[A] = s match
+      def takeWhile(pred: (=> A) => Boolean): Stream[A] = s match
         case Cons(h, t) if pred(h()) => cons(h(), t().takeWhile(pred))
         case _ => empty()
 

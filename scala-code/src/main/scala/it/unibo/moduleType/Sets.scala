@@ -12,11 +12,15 @@ object Sets:
   trait SetADT:
     // Type
     type Set[A]
+
     // Constructors
     def fromSequence[A](s: Sequence[A]): Set[A]
+
     // Operations
     def union[A](s1: Set[A], s2: Set[A]): Set[A]
+
     def intersection[A](s1: Set[A], s2: Set[A]): Set[A]
+
     extension [A](s: Set[A])
       def contains(a: A): Boolean
       def remove(a: A): Set[A]

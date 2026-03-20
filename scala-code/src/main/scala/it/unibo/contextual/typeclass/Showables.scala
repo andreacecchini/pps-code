@@ -8,10 +8,10 @@ object Showables:
 
   /** Algorithms over Showable. */
   object Showable:
-    extension [T](a: T)
-      def show(using sh: Showable[T]): String = sh.show(a)
+    extension [T: Showable](a: T)
+      def show: String = summon[Showable[T]].show(a)
 
-    def showCouple[T](t1: T, t2: T)(using sh: Showable[T]): String = s"(${t1.show}, ${t2.show})"
+    def showCouple[T: Showable](t1: T, t2: T): String = s"(${t1.show}, ${t2.show})"
 
 
 @main def testShowable(): Unit =

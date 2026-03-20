@@ -1,7 +1,7 @@
-package it.unibo.contextual
+package it.unibo.contextual.typeclass
 
 import it.unibo.algebraicDataType.Sequences.*
-import Sequence.*
+import it.unibo.algebraicDataType.Sequences.Sequence.*
 
 import scala.annotation.tailrec
 
@@ -23,10 +23,9 @@ object Orders:
 @main def testContextualModules(): Unit =
   import Orders.*
   @tailrec
-  def max[A](s: Sequence[A])(using ordering: Order[A]): A =
-    import ordering.*
+  def max[A: Order](s: Sequence[A]): A =
     s match
-      case Cons(h1, Cons(h2, t)) => max(Cons(if greater(h1, h2) then h1 else h2, t))
+      case Cons(h1, Cons(h2, t)) => max(Cons(if summon[Order[A]].greater(h1, h2) then h1 else h2, t))
       case Cons(h, Nil()) => h
 
   // import ContextualModules.given

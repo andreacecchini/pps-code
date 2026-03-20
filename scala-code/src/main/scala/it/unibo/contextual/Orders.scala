@@ -16,7 +16,7 @@ object Orders:
 
   /** An [[String]] [[Order]] implementation. */
   private object LexicGraphicalOrder extends Order[String]:
-    def greater(x: String, y: String): Boolean = x <= y
+    def greater(x: String, y: String): Boolean = x >= y
 
   given Order[String] = LexicGraphicalOrder
 

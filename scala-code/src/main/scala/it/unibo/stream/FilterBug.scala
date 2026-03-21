@@ -1,7 +1,7 @@
 package it.unibo.stream
 
 @main def testFilter(): Unit =
-  import Streams.*
+  import StreamBasics.*
   import Stream.*
 
   def x1 = {

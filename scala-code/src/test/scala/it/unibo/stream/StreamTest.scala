@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class StreamTest:
 
-  import Streams.*
+  import StreamBasics.*
   import Stream.*
 
   val natural: Stream[Int] = iterate(0)(_ + 1)

@@ -1,7 +1,7 @@
 package it.unibo.stream
 
 /** Streams module */
-object Streams:
+object StreamBasics:
   /** Stream type */
   enum Stream[A]:
     private case Empty()
@@ -67,7 +67,7 @@ object Streams:
         case _ => Empty()
 
 @main def testStream(): Unit =
-  import Streams.*
+  import StreamBasics.*
   import Stream.*
 
   // Build

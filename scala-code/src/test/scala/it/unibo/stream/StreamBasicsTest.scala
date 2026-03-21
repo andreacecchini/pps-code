@@ -3,7 +3,7 @@ package it.unibo.stream
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class StreamTest:
+class StreamBasicsTest:
 
   import StreamBasics.*
   import Stream.*

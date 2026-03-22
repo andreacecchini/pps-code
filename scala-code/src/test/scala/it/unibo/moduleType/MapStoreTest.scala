@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Assertions.*
 class MapStoreTest:
 
   import KVStoreModule.*
-  import Option.*
   val storeModule: KVStore = MapStore
   import storeModule.*
 

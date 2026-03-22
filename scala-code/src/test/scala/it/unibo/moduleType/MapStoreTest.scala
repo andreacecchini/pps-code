@@ -1,3 +1,5 @@
 package it.unibo.moduleType
 
-class MapStoreTest extends KVStoreTest(MapStore)
+import KVStoreModule.given
+
+class MapStoreTest extends KVStoreTest

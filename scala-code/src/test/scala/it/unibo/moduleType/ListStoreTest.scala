@@ -1,3 +1,3 @@
 package it.unibo.moduleType
 
-class ListStoreTest extends KVStoreTest(ListStore)
+class ListStoreTest extends KVStoreTest(using ListStore)

@@ -1,7 +1,7 @@
 package it.unibo.moduleType
 
 
-object ListStore extends KVStore:
+private[moduleType] object ListStore extends KVStore:
   opaque type Store[K, V] = List[(K, V)]
 
   def emptyStore[K, V](): Store[K, V] = List.empty

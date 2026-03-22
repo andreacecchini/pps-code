@@ -2,13 +2,12 @@ package it.unibo.moduleType
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
-import KVStoreModule.*
 
-abstract class KVStoreTest(val storeModule: KVStore):
+abstract class KVStoreTest(using storeModule: KVStore):
 
   import storeModule.*
 
-  val empty: Store[String, Int] = emptyStore()
+  private val empty: Store[String, Int] = emptyStore()
   val k1 = "i1"
   val v1 = 1
   val v2 = 2

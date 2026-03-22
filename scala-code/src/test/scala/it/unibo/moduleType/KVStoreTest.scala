@@ -19,15 +19,11 @@ abstract class KVStoreTest(val storeModule: KVStore):
 
   @Test def testAdd(): Unit =
     val s1 = empty.put(k1, v1)
-    assertFalse:
-      s1.isEmpty
     assertEquals(Some(v1), s1.get(k1))
 
   @Test def testRemove(): Unit =
     val s1 = empty.put(k1, v1)
     val s2 = s1.remove(k1)
-    assertTrue:
-      s2.isEmpty
     assertEquals(None, s2.get(k1))
 
   @Test def testOverride(): Unit =

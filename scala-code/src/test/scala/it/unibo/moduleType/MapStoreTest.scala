@@ -23,3 +23,10 @@ class MapStoreTest:
       s1.isEmpty
     assertEquals(Some(1), s1.get("i1"))
 
+  @Test def testRemove(): Unit =
+    val s1 = empty.put("i1", 2)
+    val s2 = s1.remove("i1")
+    assertTrue:
+      s2.isEmpty
+    assertEquals(None, s2.get("i1"))
+

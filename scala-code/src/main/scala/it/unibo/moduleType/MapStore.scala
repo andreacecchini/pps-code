@@ -9,3 +9,4 @@ private[moduleType] object MapStore extends KVStore:
     def isEmpty: Boolean = s.isEmpty
     def put(k: K, v: V): Store[K, V] = s + (k -> v)
     def get(k: K): Option[V] = s.get(k)
+    def remove(k: K): Store[K, V] = s - k

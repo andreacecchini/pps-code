@@ -16,3 +16,6 @@ private[moduleType] trait KVStore:
 
     /** Get an [[Option]] containing element associated with [[k]] if present. */
     def get(k: K): Option[V]
+
+    /** Remove the element associate with [[k]]. */
+    def remove(k: K): Store[K, V]

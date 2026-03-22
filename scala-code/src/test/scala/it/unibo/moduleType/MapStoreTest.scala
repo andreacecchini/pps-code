@@ -18,7 +18,6 @@ class MapStoreTest:
     assertTrue:
       empty.isEmpty
 
-
   @Test def testAdd(): Unit =
     val s1 = empty.put(k1, 1)
     assertFalse:

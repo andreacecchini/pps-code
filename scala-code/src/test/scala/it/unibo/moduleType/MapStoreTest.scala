@@ -1,6 +1,6 @@
 package it.unibo.moduleType
 
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.{BeforeEach, Test}
 import org.junit.jupiter.api.Assertions.*
 
 
@@ -11,7 +11,8 @@ class MapStoreTest:
   val storeModule: KVStore = MapStore
   import storeModule.*
 
+  val empty: Store[String, Int] = emptyStore()
+
   @Test def testEmptyStore(): Unit =
-    val store: Store[String, Int] = emptyStore()
     assertTrue:
-      store.isEmpty
+      empty.isEmpty

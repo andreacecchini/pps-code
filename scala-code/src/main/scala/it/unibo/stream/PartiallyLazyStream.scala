@@ -15,16 +15,13 @@ object PartiallyLazyStream extends StreamADT:
 
   import StreamImpl.*
 
-  /** empty node */
   def empty[A](): Stream[A] = Empty()
 
-  /** lazy node stream. */
   def cons[A](hd: => A, tl: => Stream[A]): Stream[A] =
     lazy val head = hd
     lazy val tail = tl
     Cons(() => head, () => tail)
 
-  /** build an infinite stream. */
   def iterate[A](initial: => A)(next: A => A): Stream[A] =
     cons(initial, iterate(next(initial))(next))
 
@@ -35,7 +32,6 @@ object PartiallyLazyStream extends StreamADT:
     case Cons(h1, t1) => cons(h1(), interleave(s2, t1()))
     case _ => s2
 
-  /** build an infinite stream cycling [[l]]. */
   def cycle[A](l: Sequence[A]): Stream[A] = l match
     case Sequence.Nil() => empty()
     case _ =>
@@ -45,36 +41,31 @@ object PartiallyLazyStream extends StreamADT:
 
       loop(l)
 
-
   extension [A](str: Stream[A])
-    /** stream to list. */
     def toSequence: Sequence[A] = str match
       case Empty() => Sequence.Nil()
       case Cons(h, t) => Sequence.Cons(h(), t().toSequence)
 
-    /** take the first [[n]] elements of the stream. */
     def take(n: Int): Stream[A] = str match
       case Cons(h, t) if n > 0 => cons(h(), t().take(n - 1))
       case _ => empty()
 
-    /** take elements until [[pred]] is false. */
     def takeWhile(pred: A => Boolean): Stream[A] = str match
       case Cons(h, t) if pred(h()) => cons(h(), t().takeWhile(pred))
       case _ => empty()
 
-    /** map each element in the stream by [[mapper]]. */
     def map[B](mapper: A => B): Stream[B] = str match
       case Cons(h, t) => cons(mapper(h()), t().map(mapper))
       case _ => empty()
 
-    /** filter elements by [[pred]]. */
     def filter(pred: A => Boolean): Stream[A] = str match
       case Cons(h, t) if pred(h()) => cons(h(), t().filter(pred))
       case Cons(h, t) => t().filter(pred)
       case _ => Empty()
 
 @main def testStream(): Unit =
-  import PartiallyLazyStream.*
+  val streamImpl: StreamADT = PartiallyLazyStream
+  import streamImpl.*
 
   // Build
   val s0: Stream[Int] = empty() // {}

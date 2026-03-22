@@ -7,3 +7,5 @@ private[moduleType] object MapStore extends KVStore:
 
   extension [K, V](s: Store[K, V])
     def isEmpty: Boolean = s.isEmpty
+    def put(k: K, v: V): Store[K, V] = s + (k -> v)
+    def get(k: K): Option[V] = s.get(k)

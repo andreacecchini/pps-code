@@ -10,3 +10,9 @@ private[moduleType] trait KVStore:
   extension [K, V](s: Store[K, V])
     /** Returns whether [[s]] is empty. */
     def isEmpty: Boolean
+
+    /** Put a new element in [[s]]. */
+    def put(k: K, v: V): Store[K, V]
+
+    /** Get an [[Option]] containing element associated with [[k]] if present. */
+    def get(k: K): Option[V]

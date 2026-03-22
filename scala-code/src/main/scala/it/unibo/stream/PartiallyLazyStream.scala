@@ -1,7 +1,6 @@
 package it.unibo.stream
 
 import it.unibo.algebraicDataType.Sequences.*
-
 import Streams.*
 
 /** A partially lazy [[Stream]] implementation. */
@@ -67,32 +66,17 @@ object PartiallyLazyStream extends StreamADT:
   val streamImpl: StreamADT = PartiallyLazyStream
   import streamImpl.*
 
-  // Build
-  val s0: Stream[Int] = empty() // {}
-  val s1: Stream[Int] = cons(1, s0) // {1}
-  val natural = iterate(0)(_ + 1) // {1, 2, ...}
-  // ------
-  // To list
-  println(s1.toSequence)
-  // println(natural.toSequence) // StackOverflow!
-  // ------
-  // Take
-  val toTen = natural.take(10) // {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-  println(toTen.toSequence)
-  val toFive = natural.takeWhile(_ < 5)
-  println(toFive.toSequence)
-  // ------
-  // Fibonacci
-  val fibonacci = iterate((0, 1))((a, b) => (b, a + b)).map(_._1)
-  println(fibonacci.take(2).toSequence)
-  println(fibonacci.take(5).toSequence)
-  // ------
-  // Interleaving
-  val negative = iterate(0)(_ - 1)
-  val interleaved = interleave(natural, negative)
-  println(interleaved.take(10).toSequence)
-  // ------
-  // Cycling
-  import Sequence.*
-  val l = Cons('a', Cons('b', Cons('c', Nil())))
-  println(cycle(l).take(5).toSequence)
+  def x1 = {
+    println("computed x1...")
+    1
+  }
+
+  def x2 = {
+    println("computed x2...")
+    2
+  }
+
+  val str = cons(x1, cons(x2, empty()))
+//str.filter(_ => false) // will compute x1 and x2!
+//str.takeWhile(_ => false) // will compute x1!
+//str.map(_ + 1) // ok

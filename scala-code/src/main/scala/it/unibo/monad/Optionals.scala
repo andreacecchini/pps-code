@@ -29,23 +29,22 @@ object Optionals:
 @main def testMonadicOptionals(): Unit =
   import Optionals.{*, given}
   import Optional.*
+  import Monads.*
+  import Monad.*
 
-  // For yield monadic construct
-  val m: Optional[Int] = for
-    x <- Just(1)
-    y <- Just(2)
-    z <- Just(x * 2 + y)
-  yield x + y + z
-  // This becomes
-  val m2: Optional[Int] = Just(1).flatMap(
-    x => Just(2).flatMap(
-      y => Just(x * 2 + y).map(
-        z => x + y + z
-      )))
   println:
-    m
+    for
+      x <- Just(1)
+      y <- Just(2)
+      z <- Just(x * 2 + y)
+    yield x + y + z
   println:
-    m2
-  val m3 = m.filter(_ > 10)
+    Just(1).flatMap(
+      x => Just(2).flatMap(
+        y => Just(x * 2 + y).map(
+          z => x + y + z
+        )))
+  val m1 = Just(1)
+  val m2 = Just(2)
   println:
-    m3
+    map2(m1, m2)(_ + _)

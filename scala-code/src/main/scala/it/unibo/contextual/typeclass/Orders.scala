@@ -6,7 +6,11 @@ import it.unibo.algebraicDataType.Sequences.Sequence.*
 import scala.annotation.tailrec
 
 object Orders:
-  /** Ordered Type class */
+  /**
+   * Ordered Type class
+   * > Generic Type Module
+   * > 1-higher kinded type = generic over 0-higher kinded type
+   * */
   trait Ordered[A]:
     def greater(x: A, y: A): Boolean
 

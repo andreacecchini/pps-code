@@ -8,3 +8,12 @@ object Monads:
     extension [A](m: M[A])
       def flatMap[B](f: A => M[B]): M[B]
       def map[B](f: A => B): M[B] = m.flatMap(a => unit(f(a)))
+
+  /** Some algorithms over [[Monad]]. */
+  object Monad:
+    def map2[M[_] : Monad, A, B, C](m: M[A], m2: => M[B])(f: (A, B) => C): M[C] =
+      for
+        a <- m
+        b <- m2
+      yield f(a, b)
+

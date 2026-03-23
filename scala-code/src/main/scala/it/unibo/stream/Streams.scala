@@ -8,24 +8,33 @@ object Streams:
     /** Represents a stream of elements of type [[A]]. */
     type Stream[A]
 
-    /** Returns an empty [[Stream]]. */
-    def empty[A](): Stream[A]
-
-    /** Create a new node holding [[hd]]. */
-    def cons[A](hd: => A, tl: => Stream[A]): Stream[A]
+    /** Represents a step in the stream evaluation. */
+    protected enum Step[A]:
+      case Empty()
+      case Cons(head: () => A, tail: () => Stream[A])
 
     /**
-     * Higher-order combinator for stream transformations.
-     * Abstracts over the evaluation strategy (lazy vs strict).
+     * Lifts a [[Step]] into a [[Stream]].
      *
-     * @param str     the stream to transform
-     * @param onEmpty result when stream is empty
-     * @param onCons  function applied to head and tail when stream is non-empty
+     * @param step the step to lift.
      */
-    def unfold[A, B](str: Stream[A])(
-      onEmpty: => Stream[B],
-      onCons: (=> A, => Stream[A]) => Stream[B]
-    ): Stream[B]
+    protected def fromStep[A](step: => Step[A]): Stream[A]
+
+    /**
+     * Wraps a stream computation with the appropriate laziness strategy.
+     *
+     * @param thunk the stream computation to wrap.
+     */
+    private def wrap[A](thunk: => Stream[A]): Stream[A] = fromStep(thunk.step)
+
+    /** Returns an empty [[Stream]]. */
+    def empty[A](): Stream[A] = fromStep(Step.Empty())
+
+    /** Create a new node holding [[hd]]. */
+    def cons[A](hd: => A, tl: => Stream[A]): Stream[A] = fromStep:
+      lazy val head = hd
+      lazy val tail = tl
+      Step.Cons(() => head, () => tail)
 
     /**
      * Higher-order combinator for stream consumption.
@@ -38,7 +47,22 @@ object Streams:
     def fold[A, B](str: Stream[A])(
       onEmpty: => B,
       onCons: (=> A, => Stream[A]) => B
-    ): B
+    ): B = str.step match
+      case Step.Empty() => onEmpty
+      case Step.Cons(h, t) => onCons(h(), t())
+
+    /**
+     * Higher-order combinator for stream transformations (anamorphism).
+     * Derived from fold + wrap: abstracts pattern matching and applies laziness strategy.
+     *
+     * @param str     the stream to transform
+     * @param onEmpty result when stream is empty
+     * @param onCons  function applied to head and tail when stream is non-empty
+     */
+    def unfold[A, B](str: Stream[A])(
+      onEmpty: => Stream[B],
+      onCons: (=> A, => Stream[A]) => Stream[B]
+    ): Stream[B] = wrap(fold(str)(onEmpty, onCons))
 
     /** Build an infinite [[Stream]] from [[initial]], advancing through [[next]]. */
     def iterate[A](initial: => A)(next: A => A): Stream[A] =
@@ -67,6 +91,9 @@ object Streams:
         loop(l)
 
     extension [A](str: Stream[A])
+      /** Access the stream's step for pattern matching. */
+      protected def step: Step[A]
+
       /** Convert [[str]] to a [[Sequence]]. */
       def toSequence: Sequence[A] =
         fold(str)(

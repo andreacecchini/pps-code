@@ -44,6 +44,6 @@ abstract class StreamTest(using streamImpl: StreamADT):
     assertEquals(Cons(0, Cons(0, Cons(1, Cons(-1, Nil())))), interleave(naturals, negatives).take(4).toSequence)
 
   @Test def testCycle(): Unit =
-    assertEquals(empty(), cycle(Nil()))
+    assertEquals(Nil(), cycle(Nil()).toSequence)
     assertEquals(Cons('a', Cons('a', Nil())), cycle(Cons('a', Nil())).take(2).toSequence)
     assertEquals(Cons('a', Cons('b', Cons('c', Cons('a', Cons('b', Nil()))))), cycle(Cons('a', Cons('b', Cons('c', Nil())))).take(5).toSequence)

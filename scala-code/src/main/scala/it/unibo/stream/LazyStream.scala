@@ -3,6 +3,7 @@ package it.unibo.stream
 import Streams.*
 import it.unibo.algebraicDataType.Sequences.*
 
+/** A real lazy [[Stream]] implementation. */
 object LazyStream extends StreamADT:
   opaque type Stream[A] = () => Step[A]
 
@@ -17,15 +18,9 @@ object LazyStream extends StreamADT:
     lazy val tail = tl
     Step.Cons(() => head, () => tail)
 
-  def iterate[A](initial: => A)(next: A => A): Stream[A] = cons(initial, iterate(next(initial))(next))
-
-  def fill[A](n: Int)(k: => A): Stream[A] = ???
-
   def interleave[A](s1: Stream[A], s2: Stream[A]): Stream[A] = () => s1.step match
     case Step.Cons(h1, t1) => cons(h1(), interleave(s2, t1())).step
     case _ => s2.step
-
-  def cycle[A](l: Sequence[A]): Stream[A] = ???
 
   extension [A](str: Stream[A])
     private def step: Step[A] = str()
@@ -49,7 +44,9 @@ object LazyStream extends StreamADT:
         if pred(hv) then cons(hv, t().filter(pred)).step
         else t().filter(pred).step
 
-    def takeWhile(pred: A => Boolean): Stream[A] = ???
+    def takeWhile(pred: A => Boolean): Stream[A] = () => str.step match
+      case Step.Cons(h, t) if pred(h()) => cons(h(), t().takeWhile(pred)).step
+      case _ => empty().step
 
 @main def testLazyStream(): Unit =
   val streamImpl: StreamADT = LazyStream

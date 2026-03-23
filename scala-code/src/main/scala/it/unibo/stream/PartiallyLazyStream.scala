@@ -5,7 +5,6 @@ import Streams.*
 
 /** A partially lazy [[Stream]] implementation. */
 object PartiallyLazyStream extends StreamADT:
-
   opaque type Stream[A] = StreamImpl[A]
 
   private enum StreamImpl[A]:
@@ -21,24 +20,9 @@ object PartiallyLazyStream extends StreamADT:
     lazy val tail = tl
     Cons(() => head, () => tail)
 
-  def iterate[A](initial: => A)(next: A => A): Stream[A] =
-    cons(initial, iterate(next(initial))(next))
-
-  def fill[A](n: Int)(k: => A): Stream[A] =
-    cycle(Sequence.Cons(k, Sequence.Nil())).take(n)
-
   def interleave[A](s1: Stream[A], s2: Stream[A]): Stream[A] = s1 match
     case Cons(h1, t1) => cons(h1(), interleave(s2, t1()))
     case _ => s2
-
-  def cycle[A](l: Sequence[A]): Stream[A] = l match
-    case Sequence.Nil() => empty()
-    case _ =>
-      def loop(remainder: Sequence[A]): Stream[A] = remainder match
-        case Sequence.Nil() => loop(l)
-        case Sequence.Cons(h, t) => cons(h, loop(t))
-
-      loop(l)
 
   extension [A](str: Stream[A])
     def toSequence: Sequence[A] = str match
@@ -66,17 +50,7 @@ object PartiallyLazyStream extends StreamADT:
   val streamImpl: StreamADT = PartiallyLazyStream
   import streamImpl.*
 
-  def x1 = {
-    println("computed x1...")
-    1
-  }
-
-  def x2 = {
-    println("computed x2...")
-    2
-  }
-
+  def x1 = {println("computed x1..."); 1}
+  def x2 = {println("computed x2..."); 2}
   val str = cons(x1, cons(x2, empty()))
-//str.filter(_ => false) // will compute x1 and x2!
-//str.takeWhile(_ => false) // will compute x1!
-//str.map(_ + 1) // ok
+  str.filter(_ => false) // will compute x1 and x2!

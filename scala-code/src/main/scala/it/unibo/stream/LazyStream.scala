@@ -18,35 +18,22 @@ object LazyStream extends StreamADT:
     lazy val tail = tl
     Step.Cons(() => head, () => tail)
 
-  def interleave[A](s1: Stream[A], s2: Stream[A]): Stream[A] = () => s1.step match
-    case Step.Cons(h1, t1) => cons(h1(), interleave(s2, t1())).step
-    case _ => s2.step
-
   extension [A](str: Stream[A])
     private def step: Step[A] = str()
 
-    def toSequence: Sequence[A] = str.step match
-      case Step.Empty() => Sequence.Nil()
-      case Step.Cons(h, t) => Sequence.Cons(h(), t().toSequence)
+  def unfold[A, B](str: Stream[A])(
+    onEmpty: => Stream[B],
+    onCons: (=> A, => Stream[A]) => Stream[B]
+  ): Stream[B] = () => str.step match
+    case Step.Empty() => onEmpty.step
+    case Step.Cons(h, t) => onCons(h(), t()).step
 
-    def take(n: Int): Stream[A] = () => str.step match
-      case Step.Cons(h, t) if n > 0 => cons(h(), t().take(n - 1)).step
-      case _ => empty().step
-
-    def map[B](f: A => B): Stream[B] = () => str.step match
-      case Step.Cons(h, t) => cons(f(h()), t().map(f)).step
-      case _ => empty().step
-
-    def filter(pred: A => Boolean): Stream[A] = () => str.step match
-      case Step.Empty() => empty().step
-      case Step.Cons(h, t) =>
-        val hv = h()
-        if pred(hv) then cons(hv, t().filter(pred)).step
-        else t().filter(pred).step
-
-    def takeWhile(pred: A => Boolean): Stream[A] = () => str.step match
-      case Step.Cons(h, t) if pred(h()) => cons(h(), t().takeWhile(pred)).step
-      case _ => empty().step
+  def fold[A, B](str: Stream[A])(
+    onEmpty: => B,
+    onCons: (=> A, => Stream[A]) => B
+  ): B = str.step match
+    case Step.Empty() => onEmpty
+    case Step.Cons(h, t) => onCons(h(), t())
 
 @main def testLazyStream(): Unit =
   val streamImpl: StreamADT = LazyStream

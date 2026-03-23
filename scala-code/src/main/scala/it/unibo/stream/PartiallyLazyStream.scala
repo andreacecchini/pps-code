@@ -20,31 +20,19 @@ object PartiallyLazyStream extends StreamADT:
     lazy val tail = tl
     Cons(() => head, () => tail)
 
-  def interleave[A](s1: Stream[A], s2: Stream[A]): Stream[A] = s1 match
-    case Cons(h1, t1) => cons(h1(), interleave(s2, t1()))
-    case _ => s2
+  def unfold[A, B](str: Stream[A])(
+    onEmpty: => Stream[B],
+    onCons: (=> A, => Stream[A]) => Stream[B]
+  ): Stream[B] = str match
+    case Empty() => onEmpty
+    case Cons(h, t) => onCons(h(), t())
 
-  extension [A](str: Stream[A])
-    def toSequence: Sequence[A] = str match
-      case Empty() => Sequence.Nil()
-      case Cons(h, t) => Sequence.Cons(h(), t().toSequence)
-
-    def take(n: Int): Stream[A] = str match
-      case Cons(h, t) if n > 0 => cons(h(), t().take(n - 1))
-      case _ => empty()
-
-    def takeWhile(pred: A => Boolean): Stream[A] = str match
-      case Cons(h, t) if pred(h()) => cons(h(), t().takeWhile(pred))
-      case _ => empty()
-
-    def map[B](mapper: A => B): Stream[B] = str match
-      case Cons(h, t) => cons(mapper(h()), t().map(mapper))
-      case _ => empty()
-
-    def filter(pred: A => Boolean): Stream[A] = str match
-      case Cons(h, t) if pred(h()) => cons(h(), t().filter(pred))
-      case Cons(h, t) => t().filter(pred)
-      case _ => Empty()
+  def fold[A, B](str: Stream[A])(
+    onEmpty: => B,
+    onCons: (=> A, => Stream[A]) => B
+  ): B = str match
+    case Empty() => onEmpty
+    case Cons(h, t) => onCons(h(), t())
 
 @main def testStream(): Unit =
   val streamImpl: StreamADT = PartiallyLazyStream

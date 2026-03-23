@@ -4,11 +4,11 @@ import Streams.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
-val streamImpl: StreamADT = LazyStream
-given StreamADT = streamImpl
+val lazyStream: StreamADT = LazyStream
+given StreamADT = lazyStream
 
 class LazyStreamTest extends StreamTest:
-  import streamImpl.*
+  import lazyStream.*
 
   @Test def testLazyFilter(): Unit =
     var c1 = 0

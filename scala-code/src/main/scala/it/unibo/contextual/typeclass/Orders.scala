@@ -13,10 +13,11 @@ object Orders:
   /** Some algorithms on [[Ordered]]. */
   object Ordered:
     @tailrec
-    def max[A: Ordered](s: Sequence[A]): A =
+    def max[A: Ordered](s: Sequence[A]): Option[A] =
       s match
         case Cons(h1, Cons(h2, t)) => max(Cons(if summon[Ordered[A]].greater(h1, h2) then h1 else h2, t))
-        case Cons(h, Nil()) => h
+        case Cons(h, Nil()) => Some(h)
+        case Nil() => None
 
   // Anonymous type class implementation
   given Ordered[Int] with

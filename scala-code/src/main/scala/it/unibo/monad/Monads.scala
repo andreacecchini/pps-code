@@ -11,9 +11,5 @@ object Monads:
 
   /** Some algorithms over [[Monad]]. */
   object Monad:
-    def map2[M[_] : Monad, A, B, C](m: M[A], m2: => M[B])(f: (A, B) => C): M[C] =
-      for
-        a <- m
-        b <- m2
-      yield f(a, b)
-
+    def map2[M[_]: Monad, A, B, C](m: M[A], m2: => M[B])(f: (A, B) => C): M[C] =
+      m.flatMap(a => m2.map(b => f(a, b)))

@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "scala",
+      "request": "launch",
+      "name": "testEuros",
+      "mainClass": "it.unibo.oopVsFp.testEuros",
+      "buildTarget": "file:/Users/andreacecchini/git/pps-code/scala-code/?id=root",
+      "args": [],
+      "jvmOptions": [],
+      "env": {}
+    }
+  ]
+}

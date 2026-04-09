@@ -10,6 +10,16 @@
       "args": [],
       "jvmOptions": [],
       "env": {}
+    },
+    {
+      "type": "scala",
+      "request": "launch",
+      "name": "testBank",
+      "mainClass": "it.unibo.bankAccount.testBank",
+      "buildTarget": "file:/Users/andreacecchini/git/pps-code/scala-code/?id=root",
+      "args": [],
+      "jvmOptions": [],
+      "env": {}
     }
   ]
 }

@@ -17,6 +17,7 @@
             
         ],
         "classpath": [
+            "/Users/andreacecchini/Library/Application Support/JetBrains/IntelliJIdea2026.1/plugins/Scala/repo/org/jetbrains/scala/sbt-structure-extractor_2.12_1.3/2026.1.3/sbt-structure-extractor_2.12_1.3-2026.1.3.jar",
             "/Users/andreacecchini/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/sbt/1.12.3/sbt-1.12.3.jar",
             "/Users/andreacecchini/.sbt/boot/scala-2.12.21/lib/scala-library.jar",
             "/Users/andreacecchini/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/epfl/scala/sbt-bloop_2.12_1.0/2.0.18/sbt-bloop_2.12_1.0-2.0.18.jar",
@@ -148,8 +149,8 @@
                 "import _root_.sbt._",
                 "import _root_.sbt.Keys._",
                 "import _root_.sbt.nio.Keys._",
-                "import _root_.sbt.ScriptedPlugin.autoImport._, _root_.sbt.plugins.JUnitXmlReportPlugin.autoImport._, _root_.sbt.plugins.MiniDependencyTreePlugin.autoImport._, _root_.bloop.integrations.sbt.BloopPlugin.autoImport._",
-                "import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.ScriptedPlugin, _root_.sbt.plugins.SbtPlugin, _root_.sbt.plugins.SemanticdbPlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.sbt.plugins.MiniDependencyTreePlugin, _root_.bloop.integrations.sbt.BloopPlugin"
+                "import _root_.sbt.ScriptedPlugin.autoImport._, _root_.sbt.plugins.JUnitXmlReportPlugin.autoImport._, _root_.sbt.plugins.MiniDependencyTreePlugin.autoImport._, _root_.bloop.integrations.sbt.BloopPlugin.autoImport._, _root_.org.jetbrains.sbt.GenerateAllManagedSourcesPlugin.autoImport._",
+                "import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.ScriptedPlugin, _root_.sbt.plugins.SbtPlugin, _root_.sbt.plugins.SemanticdbPlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.sbt.plugins.MiniDependencyTreePlugin, _root_.bloop.integrations.sbt.BloopPlugin, _root_.org.jetbrains.sbt.GenerateAllManagedSourcesPlugin, _root_.org.jetbrains.sbt.StructurePlugin"
             ]
         },
         "test": {
@@ -214,7 +215,7 @@
         "platform": {
             "name": "jvm",
             "config": {
-                "home": "/Users/andreacecchini/.sdkman/candidates/java/24.0.2-tem",
+                "home": "/Users/andreacecchini/.sdkman/candidates/java/21.0.8-tem",
                 "options": [
                     "-Duser.dir=/Users/andreacecchini/git/pps-code/scala-code/project"
                 ]
@@ -223,13 +224,14 @@
                 
             ],
             "runtimeConfig": {
-                "home": "/Users/andreacecchini/.sdkman/candidates/java/24.0.2-tem",
+                "home": "/Users/andreacecchini/.sdkman/candidates/java/21.0.8-tem",
                 "options": [
                     "-Duser.dir=/Users/andreacecchini/git/pps-code/scala-code/project"
                 ]
             },
             "classpath": [
                 "/Users/andreacecchini/git/pps-code/scala-code/project/.bloop/scala-code-build/scala-2.12/sbt-1.0/classes",
+                "/Users/andreacecchini/Library/Application Support/JetBrains/IntelliJIdea2026.1/plugins/Scala/repo/org/jetbrains/scala/sbt-structure-extractor_2.12_1.3/2026.1.3/sbt-structure-extractor_2.12_1.3-2026.1.3.jar",
                 "/Users/andreacecchini/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/epfl/scala/sbt-bloop_2.12_1.0/2.0.18/sbt-bloop_2.12_1.0-2.0.18.jar",
                 "/Users/andreacecchini/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/ch/epfl/scala/bloop-config_2.12/2.3.3/bloop-config_2.12-2.3.3.jar",
                 "/Users/andreacecchini/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/plokhotnyuk/jsoniter-scala/jsoniter-scala-core_2.12/2.13.5.2/jsoniter-scala-core_2.12-2.13.5.2.jar",

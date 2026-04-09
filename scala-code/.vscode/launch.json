@@ -20,6 +20,16 @@
       "args": [],
       "jvmOptions": [],
       "env": {}
+    },
+    {
+      "type": "scala",
+      "request": "launch",
+      "name": "testUniformAccess",
+      "mainClass": "it.unibo.oop.testUniformAccess",
+      "buildTarget": "file:/Users/andreacecchini/git/pps-code/scala-code/?id=root",
+      "args": [],
+      "jvmOptions": [],
+      "env": {}
     }
   ]
 }

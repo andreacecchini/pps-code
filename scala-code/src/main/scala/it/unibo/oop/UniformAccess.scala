@@ -17,6 +17,7 @@ object UniformAccess:
     // indexer-set (arr[idx] = el)
     def update(index: Int, s: String): Unit = println("indexer-set")
     // math-like operator
+    def +(i: Int): A = { field = field + i; this }
     def +:(i: Int): A = { field = field + i; this }
 end UniformAccess
 
@@ -35,3 +36,9 @@ end UniformAccess
   // indexer {get; set}
   val el = a(1) // a.apply(1)
   a(1) = el // a.update(1, el)
+  // left associative
+  // ((((a+1)+2)+3)+4)
+  a + 1 + 2 + 3 + 4 // a.+(1).+(2).+(3).+(4)
+  // right associative
+  // (4+(3+(2+(1+a))))
+  4 +: 3 +: 2 +: 1 +: a // a.+:(1).+:(2).+:(3).+:(4)

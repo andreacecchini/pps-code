@@ -17,7 +17,7 @@ object UniformAccess:
     // indexer-set (arr[idx] = el)
     def update(index: Int, s: String): Unit = println("indexer-set")
     // math-like operator
-    def +(i: Int): A = { field = field + i; this }
+    def +:(i: Int): A = { field = field + i; this }
 end UniformAccess
 
 @main def testUniformAccess(): Unit =

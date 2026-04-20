@@ -9,7 +9,6 @@ repositories {
 
 dependencies {
     implementation(libs.scala.library)
-
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.platform.launcher)
 }

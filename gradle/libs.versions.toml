@@ -3,8 +3,12 @@ java = "25"
 scala = "3.8.1"
 junit-jupiter = "5.12.1"
 junit-platform = "1.12.1"
+scalatest = "3.2.19"
+scalatestplus-junit5 = "3.2.19.0"
 
 [libraries]
 scala-library = { module = "org.scala-lang:scala3-library_3", version.ref = "scala" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
+scalatest = { module = "org.scalatest:scalatest_3", version.ref = "scalatest" }
+scalatestplus-junit5 = { module = "org.scalatestplus:junit-5-10_3", version.ref = "scalatestplus-junit5" }

@@ -10,6 +10,8 @@ repositories {
 dependencies {
     implementation(libs.scala.library)
     testImplementation(libs.junit.jupiter)
+    testImplementation(libs.scalatest)
+    testImplementation(libs.scalatestplus.junit5)
     testRuntimeOnly(libs.junit.platform.launcher)
 }
 

@@ -4,8 +4,11 @@ private[moduleType] trait KVStore:
   /** Abstracts a data structure which holds (key, value) pairs. */
   type Store[K, V]
 
+  object Store:
+    def apply[K, V](): Store[K, V] = emptyStore()
+
   /** Create an empty [[Store]] */
-  def emptyStore[K, V](): Store[K, V]
+  protected def emptyStore[K, V](): Store[K, V]
 
   extension [K, V](s: Store[K, V])
     /** Returns whether [[s]] is empty. */

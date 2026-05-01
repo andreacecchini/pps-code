@@ -13,7 +13,7 @@ project/project/
 
 # VS Code
 .vscode/
-
+out/
 # IntelliJ IDEA
 .idea/
 *.iml

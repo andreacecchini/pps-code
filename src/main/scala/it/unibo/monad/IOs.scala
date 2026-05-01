@@ -13,12 +13,11 @@ object IOs:
     def compute[A](a: => A): IO[A] = IO(() => a)
     def nop(): IO[Unit] = compute({})
 
-  given Monad[IO] with {
+  given Monad[IO] with
     def unit[A](a: A): IO[A] = IO.compute(a)
     extension [A](m: IO[A])
       def flatMap[B](f: A => IO[B]): IO[B] = m match
         case IO(e) => f(e())
-  }
 
 end IOs
 

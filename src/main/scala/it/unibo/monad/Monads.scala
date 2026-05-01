@@ -13,3 +13,5 @@ object Monads:
   object Monad:
     def map2[M[_]: Monad, A, B, C](m: M[A], m2: => M[B])(f: (A, B) => C): M[C] =
       m.flatMap(a => m2.map(b => f(a, b)))
+    def seq[M[_]: Monad, A, B](m: M[A], m2: => M[B]): M[B] =
+      map2(m, m2)((_, b) => b)

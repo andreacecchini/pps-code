@@ -25,7 +25,6 @@ object Optionals:
         case Just(a) => f(a)
         case Empty() => Empty()
 
-
 @main def testMonadicOptionals(): Unit =
   import Optionals.{*, given}
   import Optional.*
@@ -38,13 +37,14 @@ object Optionals:
       y <- Just(2)
       z <- Just(x * 2 + y)
     yield x + y + z
-  println:
-    Just(1).flatMap(
-      x => Just(2).flatMap(
-        y => Just(x * 2 + y).map(
-          z => x + y + z
-        )))
+    // Just(1).flatMap(
+    //   x => Just(2).flatMap(
+    //     y => Just(x * 2 + y).map(
+    //       z => x + y + z
+    //     )))
   val m1 = Just(1)
   val m2 = Just(2)
   println:
     map2(m1, m2)(_ + _)
+  println:
+    seq(m1, m2)

@@ -10,11 +10,6 @@ object States:
     */
   case class State[S, A](run: S => (S, A))
 
-  object State:
-    extension [S, A](m: State[S, A])
-      def apply(s: S): (S, A) = m match
-        case State(run) => run(s)
-
   // type lambdas
   given stateMonad[S]: Monad[[A] =>> State[S, A]] with
     // Run the state without evolution but with the produced value
@@ -23,8 +18,8 @@ object States:
       // Run the state -> Get produced value -> use it to build new state
       def flatMap[B](f: A => State[S, B]): State[S, B] =
         State(s1 =>
-          m(s1) match
-            case (s2, a) => val m2 = f(a); m2(s2)
+          m run s1 match
+            case (s2, a) => f(a) run s2
         )
 end States
 
@@ -63,26 +58,20 @@ object CounterStateImpl extends CounterState:
     case _ => for _ <- increment(n - 1); _ <- inc() yield {}
 
   println:
-    inc().run(initialCounter())
-  println:
-    seq(inc(), inc()).run(initialCounter())
+    get() run initialCounter()
 
-  val session: State[Counter, Int] =
-    inc().flatMap { _ =>
-      reset().flatMap { _ =>
-        increment(5).flatMap { _ =>
-          get().flatMap { v =>
-            reset().map { _ => v }
-          }
-        }
-      }
-    }
-    // for
-    //   _ <- inc()
-    //   _ <- reset()
-    //   _ <- increment(5)
-    //   v <- get()
-    //   _ <- reset()
-    // yield v
   println:
-    session.run(initialCounter())
+    inc() run initialCounter()
+
+  println:
+    seq(inc(), get()) run initialCounter()
+
+  println:
+    (for
+      _ <- inc()
+      _ <- reset()
+      _ <- increment(5)
+      v <- get()
+      _ <- reset()
+      _ <- inc()
+    yield v) run initialCounter()

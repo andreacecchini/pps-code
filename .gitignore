@@ -8,6 +8,11 @@ build/
 .gradle/
 project/target/
 project/project/
+.metals/
+.bloop/
+
+# VS Code
+.vscode/
 
 # IntelliJ IDEA
 .idea/

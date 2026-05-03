@@ -8,19 +8,21 @@ import it.unibo.monad.Monads.Monad.seq
 object States:
   /** Data structure holding state evolution.
     */
-  case class State[S, A](run: S => (S, A))
+  opaque type State[S, A] = S => (S, A)
+  object State:
+    def apply[S, A](next: S => (S, A)): State[S, A] = next
+    extension [S, A](s: State[S, A]) infix def run(current: S): (S, A) = s(current)
 
   // type lambdas
   given stateMonad[S]: Monad[[A] =>> State[S, A]] with
     // Run the state without evolution but with the produced value
-    def unit[A](a: A): State[S, A] = State(s => (s, a))
+    def unit[A](a: A): State[S, A] = s => (s, a)
     extension [A](m: State[S, A])
       // Run the state -> Get produced value -> use it to build new state
       def flatMap[B](f: A => State[S, B]): State[S, B] =
-        State(s1 =>
-          m run s1 match
-            case (s2, a) => f(a) run s2
-        )
+        s1 =>
+          m(s1) match
+            case (s2, a) => f(a)(s2)
 end States
 
 @main def testStates(): Unit =
@@ -28,7 +30,7 @@ end States
   val s: State[Int, Int] = State((counter) => (counter + 1, counter))
   println(s run 0)
   val s3: State[Int, Int] = s.flatMap(s1 => s).flatMap(s2 => s)
-  println(s3 run 0)
+  println(s3)
 
 import States.*
 trait CounterState:

@@ -11,18 +11,21 @@ object States:
   opaque type State[S, A] = S => (S, A)
   object State:
     def apply[S, A](next: S => (S, A)): State[S, A] = next
-    extension [S, A](s: State[S, A]) infix def run(current: S): (S, A) = s(current)
+    extension [S, A](s: State[S, A])
+      infix def run(current: S): (S, A) = s(current)
 
   // type lambdas
   given stateMonad[S]: Monad[[A] =>> State[S, A]] with
+    import State.*
     // Run the state without evolution but with the produced value
-    def unit[A](a: A): State[S, A] = s => (s, a)
+    def unit[A](a: A): State[S, A] = State(s => (s, a))
     extension [A](m: State[S, A])
       // Run the state -> Get produced value -> use it to build new state
       def flatMap[B](f: A => State[S, B]): State[S, B] =
-        s1 =>
-          m(s1) match
-            case (s2, a) => f(a)(s2)
+        State(s =>
+          val (s1, a) = m run s
+          f(a) run s1
+        )
 end States
 
 @main def testStates(): Unit =

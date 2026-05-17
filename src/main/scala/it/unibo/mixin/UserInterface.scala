@@ -9,7 +9,8 @@ package it.unibo.mixin
 
 object UserInterface:
   /** Represents a generic widget in the GUI. */
-  trait Widget
+  trait Widget:
+    def updateUI(): Unit
 
   /** Observer in Observer pattern. */
   trait Observer[State]:
@@ -32,15 +33,16 @@ object UserInterface:
    * Represents a gui element with the ability to be clickable.
    * It is a mixin, with the ability to add clickable behavior to a gui widget.
    * */
-  trait Clickable:
+  trait Clickable extends Widget:
+    this: Widget =>
     def click(): Unit = updateUI()
-    protected def updateUI(): Unit
 
   /**
    * Add subject functionality to a [[Clickable]].
    * It is Stackable trait, it wraps Clickable mixin to add observable behavior on clicks.
    * */
   trait ObservableClicks extends Clickable with Subject[Clickable]:
+    this: Widget =>
     abstract override def click(): Unit =
       super.click()
       notifyObservers()
@@ -52,7 +54,7 @@ object UserInterface:
   class LabelledButton(initialLabel: String) extends Button:
     private var _label = initialLabel
     def label: String = _label
-    override protected def updateUI(): Unit = _label = "Clicked!"
+    override def updateUI(): Unit = _label = "Clicked!"
 
 end UserInterface
 

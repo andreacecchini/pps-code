@@ -12,29 +12,29 @@ trait Exams:
   // Defined types
   case class Exam(course: Course, session: Session, student: Student)
   type Registration = (Exam, Evaluation)
-  // Methods
+  // Factories
   def student(name: String): Student
   def teacher(name: String): Teacher
   def course(name: String): Course
   def evaluation(grade: Int): Evaluation
+  def session(id: Int): Session
+  // Methods
   def register(registration: Registration): Unit
   def evaluation(student: Student, course: Course): Evaluation
-  def session(id: Int): Session
 end Exams
 
-trait InMemoryExams extends Exams:
-  private var registrations: Set[Registration] = Set.empty
+trait AbstractExams extends Exams:
+  this: ExamsRepository =>
 
   override def register(registration: Registration): Unit =
-    registrations += registration
+    store(registration)
 
   given Ordering[Session] = Ordering.by(_.id)
   override def evaluation(student: Student, course: Course): Evaluation =
-    registrations.collect:
-      case (Exam(`course`, session, `student`), evaluation) => (session, evaluation)
-    .maxBy(_._1)._2
+    load(student, course).maxBy(_._1)._2
 
-class BasicExams extends InMemoryExams:
+trait BasicExams extends AbstractExams:
+  this: ExamsRepository =>
   // Types
   override opaque type Student = String
   override opaque type Teacher = String
@@ -48,8 +48,25 @@ class BasicExams extends InMemoryExams:
   def evaluation(grade: Int): Evaluation = grade
   def session(id: Int): Session = SessionFromId(id)
 
+trait ExamsRepository:
+  this: Exams =>
+
+  def store(registration: Registration): Unit
+  def load(student: Student, course: Course): Set[(Session, Evaluation)]
+
+trait InMemoryRepository extends ExamsRepository:
+  this: Exams =>
+  private var registrations: Set[Registration] = Set.empty
+
+  override def store(registration: Registration): Unit =
+    registrations += registration
+
+  override def load(student: Student, course: Course): Set[(Session, Evaluation)] =
+    registrations.collect:
+      case (Exam(`course`, session, `student`), evaluation) => (session, evaluation)
+
 @main def workWithExams(): Unit =
-  val exams: Exams = BasicExams()
+  val exams: Exams = new BasicExams with InMemoryRepository
   import exams.*
   val c = course("oop")
   val s = student("mirko")
